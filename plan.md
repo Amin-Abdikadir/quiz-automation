@@ -27,10 +27,13 @@
 
 ## 🔜 What’s next
 
-### 🔲 Step 3: Click the quiz button
-- Inspect the homepage
-- Find a decent selector
-- Write the code to click it
+✅ Step 3: Click the "Take the Quiz" button
+Inspected the element and used getByRole to target the correct link
+Initial attempts failed due to a cookie overlay (#onetrust-consent-sdk) blocking clicks
+Tried using waitForSelector to detect the cookie banner and click “Accept All” — didn't always appear
+Tried removing the overlay using page.evaluate() — still caused intermittent blocking
+Final working solution: Used waitForSelector with a timeout, then removed the overlay manually if it existed. Followed that with a forced click on the quiz link after waiting for visibility.
+✔ Now clicking the quiz button works every time, and script is stable
 
 ### 🔲 Step 4: Go through the quiz
 - Click one answer per question
