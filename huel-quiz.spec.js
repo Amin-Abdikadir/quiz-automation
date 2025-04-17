@@ -1,58 +1,61 @@
-const { chromium } = require("playwright");
+const { chromium } = require('playwright');
 
 (async () => {
-  // launching a browser (runs in the background, I don’t need to see it)
-  const browser = await chromium.launch();
-
-  // starting a clean browser session
-  const context = await browser.newContext();
-
-  // opening a new tab in the browser
-  const page = await context.newPage();
+  // launching a visible browser so I can follow each step
+  const browser = await chromium.launch({ headless: false, slowMo: 300 });
+  const page = await browser.newPage();
 
   // going to the Huel homepage
-  console.log("➡️ Loading the Huel homepage...");
+  console.log("➡️ Loading Huel homepage...");
   await page.goto("https://uk.huel.com");
+  console.log("✅ Homepage loaded");
 
-  // confirming the page has loaded
-  console.log("✅ Huel homepage loaded successfully");
-
-  // check if the cookie overlay exists and block it properly
+  // accept cookie banner if shown
   try {
-    await page.waitForSelector("#onetrust-consent-sdk", { timeout: 5000 });
-
-    // remove the entire cookie SDK if it's getting in the way
-    await page.evaluate(() => {
-      const el = document.getElementById("onetrust-consent-sdk");
-      if (el) el.remove();
-    });
-
-    console.log("🚫 Removed cookie overlay (OneTrust) manually");
-  } catch (err) {
-    console.log("ℹ️ No cookie overlay found, moving on");
+    await page.waitForSelector('#onetrust-consent-sdk button:has-text("Accept")', { timeout: 5000 });
+    await page.click('#onetrust-consent-sdk button:has-text("Accept")');
+    console.log("🍪 Accepted cookies");
+  } catch {
+    console.log("ℹ️ No cookie banner found");
   }
 
-  // check if the cookie overlay is still there and remove it
-  const overlay = page.locator("#onetrust-consent-sdk");
-
-  if (await overlay.isVisible()) {
-    await page.evaluate(() => {
-      const el = document.getElementById("onetrust-consent-sdk");
-      if (el) el.remove();
-    });
-    console.log("🚫 Removed cookie overlay manually");
+  // close the “Get £10 off” signup popup if it appears
+  try {
+    const signupClose = page.locator('button:has-text("×")');
+    if (await signupClose.count() > 0) {
+      await signupClose.first().click();
+      console.log("🗙 Closed the signup offer popup");
+    }
+  } catch {
+    console.log("ℹ️ No signup popup to close");
   }
 
-  // wait for the quiz link to be ready and click it
-  const quizLink = page.getByRole("link", {
-    name: "Take the Quiz",
-    exact: true,
-  });
+  // press Escape just in case any modal remains
+  await page.keyboard.press('Escape');
+  console.log("🗙 Pressed Escape to clear any leftover popup");
+
+  // find and click the Take the Quiz link
+  const quizLink = page.getByRole("link", { name: "Take the Quiz", exact: true });
   await quizLink.waitFor({ state: "visible", timeout: 5000 });
   await quizLink.click({ force: true });
+  console.log("✅ Clicked Take the Quiz");
 
-  console.log("✅ Clicked the Take the Quiz button");
+  // find and click Get started
+  await page.waitForSelector('button:has-text("Get started")', { timeout: 10000 });
+  await page.click('button:has-text("Get started")');
+  console.log("🔀 Clicked Get started");
 
-  // closing the browser after loading the page
-  await browser.close();
+  // wait for the first question to appear
+  await page.waitForSelector("label.Answer_Answer__label__wbfzR", { timeout: 10000 });
+  console.log("✅ First answer options visible");
+
+  // pick “Lose weight” and continue
+  await page.getByLabel("Lose weight").click();
+  console.log("✅ Picked Lose weight");
+  await page.getByRole("button", { name: "Continue" }).click();
+  console.log("➡️ Clicked Continue");
+
+  // await browser.close();
 })();
+
+

@@ -25,12 +25,16 @@
 - Commit that step ✅
 
 ### ✅ Step 3: Click the "Take the Quiz" button
-- Inspect the element and use `getByRole` to target the correct link ✅
-- Detect initial failure due to cookie overlay blocking clicks ✅
-- Try `waitForSelector` and clicking "Accept All" ✅
-- Try removing the overlay with `page.evaluate()` ✅
-- Final working solution: wait for overlay, remove it if found, then force click the quiz button ✅
-- Quiz button now consistently clickable ✅
+- Accept the OneTrust cookie banner so it no longer blocks clicks ✅
+- Dismiss stray signup modals (newsletter / “Get £10 off”) with Escape ✅
+- Click the “Take the Quiz” link ✅
+- Click the survey intro “Get started” button ✅
+- **Struggles & fixes:**  
+  • The cookie overlay kept intercepting clicks → added a `waitForSelector` + click on its Accept button  
+  • A newsletter popup appeared unpredictably → sent `Escape` (and tried its close button) to clear it  
+  • Needed to wait for dynamic content (Get started, then answer labels) → added `waitForSelector` calls  
+- Now the quiz flow to the first question runs sucessfully ✅
+
 
 ---
 
