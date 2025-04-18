@@ -79,9 +79,6 @@ const path = require('path');
     await page.waitForSelector('button:has-text("Read more")', { timeout: 10000 });
     console.log("🎉 At least one product is displayed");
 
-    // ❌ TEMPORARY: Throw fake error to test screenshot capture
-    await page.click('button:has-text("DefinitelyDoesNotExist")');
-
   } catch (error) {
     console.error("❗ Something went wrong. Taking a screenshot...");
 
