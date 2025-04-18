@@ -46,13 +46,21 @@
   * The quiz changes behaviour (the UI) halfway through so you need different logic for different questions , 
   * Waiting for the element you clicked to disappear is a simple way to know the page moved on  
 
----
 
-## 🔜 What’s next
+### ✅ Step 5: Click the "No thanks" link
+- Wait for the quiz to end and look for the skip control on the sign‑up screen ✅  
+- Struggle: sometimes it was an `<a>` and sometimes a `<button>`, and my click kept missing it  
+- Fix: combined both in one locator  
+### ✅ Step 5: Click the "No thanks" link
+- Wait for the quiz to end and look for the skip control on the sign‑up screen ✅  
+- Struggle: sometimes it was an `<a>` and sometimes a `<button>`, and my click kept missing it  
+- Fix: combined both in one locator  
+  ```js
+  page.locator(
+    'a:has-text("No thanks, show me the results."), button:has-text("No thanks, show me the results.")'
+  ).first().click();
 
-### 🔲 Step 5: Click the "No thanks" link
-- Make sure the link or button is there  
-- Click it and confirm it works
+
 
 ### 🔲 Step 6: Check the results page
 - Look for at least one product shown  
