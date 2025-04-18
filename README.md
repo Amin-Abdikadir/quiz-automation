@@ -48,6 +48,7 @@ Every step was handled carefully, and I added extra features as I learned more.
 ```bash
 npm install
 node huel-quiz.spec.js
+```
 
 
 ## Reflections
