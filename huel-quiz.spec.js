@@ -8,7 +8,7 @@ const path = require('path');
 
   try {
     // 1) Go to the homepage
-    console.log("➡️ Loading Huel homepage...");
+    console.log("🙂 Loading Huel homepage...");
     await page.goto("https://uk.huel.com");
     console.log("✅ Homepage loaded");
 
@@ -17,12 +17,12 @@ const path = require('path');
       await page.click('#onetrust-consent-sdk button:has-text("Accept")', { timeout: 5000 });
       console.log("🍪 Accepted cookies");
     } catch {
-      console.log("ℹ️ No cookie banner found");
+      console.log("😅 No cookie banner found");
     }
 
     // 3) Dismiss any signup popup
     await page.keyboard.press("Escape");
-    console.log("🗙 Dismissed any signup popup");
+    console.log("😎 Dismissed any signup popup");
 
     // 4) Click "Take the Quiz"
     await page.getByRole("link", { name: "Take the Quiz", exact: true }).click();
@@ -30,7 +30,7 @@ const path = require('path');
 
     // 5) Click "Get started"
     await page.click('button:has-text("Get started")');
-    console.log("🔀 Clicked Get started");
+    console.log("😄 Clicked Get started");
 
     // Helper for quiz answers
     const ANSWER_INPUT = 'input[type="radio"], input[type="checkbox"]';
@@ -46,7 +46,7 @@ const path = require('path');
       const cont = page.getByRole("button", { name: "Continue", exact: true });
       await cont.waitFor({ state: "visible", timeout: 10000 });
       await cont.click();
-      console.log(`➡️ Q${q}: clicked Continue`);
+      console.log(`✅ Q${q}: clicked Continue`);
     }
 
     // 7) Auto-advance Q3+
@@ -55,7 +55,7 @@ const path = require('path');
 
     while (true) {
       if (await skipLinkOrButton().count() > 0) {
-        console.log("🔗 Skip link/button visible—breaking out");
+        console.log("😎 Skip link/button visible—breaking out");
         break;
       }
 
@@ -66,21 +66,21 @@ const path = require('path');
       await input.click({ force: true });
       console.log(`✅ Picked answer with input#${id}`);
       await page.waitForSelector(`input[id="${id}"]`, { state: "detached", timeout: 10000 });
-      console.log("➡️ Moved to next question");
+      console.log("😄 Moved to next question");
     }
 
     // 8) Click "No thanks, show me the results"
-    console.log("👉 Clicking the skip link/button now");
+    console.log("🙂 Clicking the skip link/button now");
     await skipLinkOrButton().first().click();
-    console.log("✂️ Clicked No thanks, show me the results");
+    console.log("✅ Clicked No thanks, show me the results");
 
     // 9) Verify at least one product
-    console.log("🔄 Page is idle, checking for products...");
+    console.log("🙂 Page is idle, checking for products...");
     await page.waitForSelector('button:has-text("Read more")', { timeout: 10000 });
-    console.log("🎉 At least one product is displayed");
+    console.log("✅ At least one product is displayed");
 
   } catch (error) {
-    console.error("❗ Something went wrong. Taking a screenshot...");
+    console.error("❌ Something went wrong. Taking a screenshot...");
 
     // Create screenshots folder if missing
     const screenshotsDir = path.resolve(__dirname, 'screenshots');
@@ -94,7 +94,7 @@ const path = require('path');
 
     // Take screenshot
     await page.screenshot({ path: filepath, fullPage: true });
-    console.log(`📸 Screenshot saved to: ${filepath}`);
+    console.log(`✅ Screenshot saved to: ${filepath}`);
 
     // Re-throw the error so it still exits with failure
     throw error;
