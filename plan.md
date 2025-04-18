@@ -48,6 +48,11 @@
 
 - Wrapped each major block (launch, navigation, quiz flow, skip link, results check) in try/catch with clear logs ✅
 
+✅ Bonus fix: Handle page load delays on results screen
+Added page.waitForLoadState("networkidle") before checking for products ✅
+This fixed a timeout issue where products hadn’t loaded yet, even though the page looked ready
+Learned: visually “loaded” isn’t the same as Playwright-ready — networkidle is more reliable for this screen
+
 ---
 
 ## 🔜 What’s next
