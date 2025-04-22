@@ -16,7 +16,7 @@
 - Run `npm init` ✅  
 - Install Playwright ✅  
 - Initialise Git and make first commit ✅  
-  _no issues here—everything installed and committed cleanly_
+  _no issues here everything installed and committed cleanly_
 
 ### ✅ Write the first bit of code
 - Launch a headless browser and open Huel homepage ✅  
@@ -34,7 +34,7 @@
 - **What I learned**  
   - Always check for overlays before interacting  
   - Role‑based selectors (`getByRole`) are more reliable than guessing CSS  
-  - Do not assume what will appear—wait for it safely  
+  - Do not assume what will appear wait for it safely  
 
 ### ✅ Step 4: Go through the quiz
 - Handle Q1–Q2 by clicking first input and then clicking Continue ✅  
