@@ -3,7 +3,6 @@
 This project automates the "Which product is right for me?" quiz on the Huel UK website using Playwright.
 
 The goal was to build something simple, reliable, and easy to follow.  
-Every step was handled carefully, and I added extra features as I learned more.
 
 ---
 
@@ -36,7 +35,6 @@ Every step was handled carefully, and I added extra features as I learned more.
 
 ## Final notes
 
-- I treated this task like a real project, not just ticking boxes
 - Whenever something did not work, I stopped, inspected properly, and built the right fix
 - I did not guess or rush. I made sure I understood every problem before moving forward
 
